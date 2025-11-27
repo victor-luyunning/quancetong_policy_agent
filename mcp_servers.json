@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "quickchart": {
+      "type": "streamable_http",
+      "url": "https://mcp.api-inference.modelscope.net/1765b0ae2e674b/mcp"
+    },
+    "amap-maps": {
+      "type": "streamable_http",
+      "url": "https://mcp.api-inference.modelscope.net/0fcda8c99abf4a/mcp"
+    },
+    "fetch": {
+      "type": "streamable_http",
+      "url": "https://mcp.api-inference.modelscope.net/a387358d274d48/mcp"
+    },
+    "context7-mcp": {
+      "type": "streamable_http",
+      "url": "https://mcp.api-inference.modelscope.net/cf88764c4a7448/mcp"
+    }
+  }
+}
