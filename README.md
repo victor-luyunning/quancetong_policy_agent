@@ -29,8 +29,11 @@
 2. 配置 `.env`（大模型配置）：
 
    DASHSCOPE_API_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
+   
    DASHSCOPE_API_KEY=你的_API_Key
+   
    DASHSCOPE_CHAT_MODEL=qwen-plus
+   
    DASHSCOPE_EMBED_MODEL=text-embedding-v3
 
 ### 2. 启动服务
