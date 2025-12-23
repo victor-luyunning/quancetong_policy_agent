@@ -4,20 +4,21 @@ import httpx
 from typing import Dict, Any, List, Optional
 from dotenv import load_dotenv
 
-from .quickchart_agent import (
-    generate_comparison_chart,
-    generate_company_score_chart,
-    generate_process_flowchart
-)
+from .quickchart_agent import generate_comparison_chart, generate_company_score_chart
+from .mermaid_agent import generate_mermaid_flowchart
 from .amap_agent import generate_industry_map, get_city_boundary
 from .fetch_agent import fetch_latest_policy, check_policy_updates
 from .context_manager import ContextManager, check_context_relevance
+from .time_agent import get_current_time, validate_policy_periods
 
 load_dotenv()
 
 API_BASE = os.getenv("DASHSCOPE_API_BASE_URL", "")
 API_KEY = os.getenv("DASHSCOPE_API_KEY", "")
 CHAT_MODEL = os.getenv("DASHSCOPE_CHAT_MODEL", "qwen-plus")
+
+# 时间MCP（用于时间感知校验）
+MCP_TIME_URL = "https://mcp.api-inference.modelscope.net/487f79a94fb641/mcp"
 
 
 class MCPToolOrchestrator:
@@ -36,7 +37,7 @@ class MCPToolOrchestrator:
             workflow_result: 工作流结果
         
         Returns:
-            需要调用的工具列表 ["quickchart", "amap", "fetch", "context7"]
+            需要调用的工具列表 ["quickchart", "amap", "fetch", "context7", "time"]
         """
         # 构建决策prompt
         prompt = f"""你是一个智能工具调度助手，需要判断以下查询需要使用哪些辅助工具。
@@ -86,8 +87,11 @@ class MCPToolOrchestrator:
                 data = resp.json()
                 content = data.get("choices", [{}])[0].get("message", {}).get("content", "{}")
                 result = json.loads(content)
-                
-                return result.get("tools", [])
+                tools = result.get("tools", [])
+                # 强制为政策解析加入时间MCP
+                if intent == "policy_parse" and "time" not in tools:
+                    tools.append("time")
+                return tools
         except Exception as e:
             print(f"[工具决策] LLM调用失败: {e}")
             # 降级为规则决策
@@ -109,6 +113,8 @@ class MCPToolOrchestrator:
         
         # 规则3: 政策解析 -> 可选fetch（检查是否需要实时更新）
         if intent == "policy_parse":
+            # 时间感知：默认加入time校验（判断命中政策是否在有效期内）
+            tools.append("time")
             # 暂不默认调用fetch
             pass
         
@@ -147,9 +153,9 @@ class MCPToolOrchestrator:
         if "fetch" in tools:
             results["fetch"] = await self._execute_fetch(entities)
         
-        # 执行Context7
-        if "context7" in tools:
-            results["context7"] = await self._execute_context7(raw_query)
+        # 执行Time（时间感知）
+        if "time" in tools:
+            results["time"] = await self._execute_time_validation(workflow_result)
         
         return results
     
@@ -158,14 +164,14 @@ class MCPToolOrchestrator:
         charts = {}
         
         if intent == "regional_compare":
-            # 区域对比图
+            # 区域对比图（雷达图）
             comparison_table = workflow_result.get("comparison_table", [])
             if comparison_table:
                 chart_data = [
                     {"category": item["region"], "value": self._extract_amount(item.get("benefit_amount", "0"))}
                     for item in comparison_table
                 ]
-                charts["comparison"] = await generate_comparison_chart(chart_data, "column")
+                charts["comparison"] = await generate_comparison_chart(chart_data, "radar")
         
         elif intent == "investment_signal":
             # 企业评分柱状图
@@ -176,11 +182,11 @@ class MCPToolOrchestrator:
                 )
         
         elif intent == "policy_parse":
-            # 申领流程图
+            # 申领流程图（使用Mermaid）
             procedures = workflow_result.get("procedures")
             if procedures:
                 steps = procedures.split("→") if "→" in procedures else procedures.split(";")
-                charts["process_flow"] = await generate_process_flowchart(steps[:6])
+                charts["process_flow"] = await generate_mermaid_flowchart(steps[:6], "LR")
         
         return charts
     
@@ -213,6 +219,21 @@ class MCPToolOrchestrator:
     async def _execute_context7(self, raw_query: str) -> Dict[str, Any]:
         """执行上下文查询"""
         return await check_context_relevance(raw_query, self.context_manager)
+    
+    async def _execute_time_validation(self, workflow_result: Dict) -> Dict[str, Any]:
+        """调用时间MCP并校验政策有效期（封装于 time_agent）"""
+        try:
+            all_hits = workflow_result.get("all_hits") or []
+            res = await validate_policy_periods(all_hits)
+            if res.get("success"):
+                return res
+            # 失败时也返回当前时间（若可获取）
+            now_res = await get_current_time()
+            if now_res.get("success"):
+                res["now"] = now_res.get("now")
+            return res
+        except Exception as e:
+            return {"success": False, "error": str(e)}
     
     def _extract_amount(self, amount_str: str) -> float:
         """从补贴金额字符串中提取数值"""

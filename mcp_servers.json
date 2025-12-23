@@ -15,6 +15,14 @@
     "context7-mcp": {
       "type": "streamable_http",
       "url": "https://mcp.api-inference.modelscope.net/cf88764c4a7448/mcp"
+    },
+    "mcp-mermaid": {
+      "type": "streamable_http",
+      "url": "https://mcp.api-inference.modelscope.net/e6c6353933ea44/mcp"
+    },
+    "time": {
+      "type": "streamable_http",
+      "url": "https://mcp.api-inference.modelscope.net/487f79a94fb641/mcp"
     }
   }
 }

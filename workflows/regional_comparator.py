@@ -57,15 +57,42 @@ async def compare_regions(raw_text: str, entities: Dict[str, Any]) -> Dict[str, 
                 "effective_period": f"{top_hit.get('effective_start')} - {top_hit.get('effective_end')}"
             })
         else:
-            comparison_results.append({
-                "region": region,
-                "policy_title": "未找到政策",
-                "benefit_type": None,
-                "benefit_amount": None,
-                "conditions": None,
-                "claiming_platform": None,
-                "effective_period": None
-            })
+            # 省级回退：若城市级未命中，则尝试山东省政策
+            fallback_loc = "山东省" if ("济南" in region or "青岛" in region) else None
+            fb_hits = []
+            if fallback_loc:
+                fb_res = await retrieve_policies(
+                    raw_text=raw_text,
+                    entity_location=fallback_loc,
+                    entity_product=entities.get("product"),
+                    entity_industry=entities.get("industry"),
+                    entity_time=entities.get("time"),
+                    top_k=3
+                )
+                fb_hits = fb_res.get("kb_hits", [])
+                if fb_res.get("kb_citations"):
+                    all_citations.append(fb_res["kb_citations"])
+            if fb_hits:
+                top_hit = fb_hits[0]
+                comparison_results.append({
+                    "region": region,
+                    "policy_title": top_hit.get("title"),
+                    "benefit_type": top_hit.get("benefit_type"),
+                    "benefit_amount": top_hit.get("benefit_amount"),
+                    "conditions": top_hit.get("conditions"),
+                    "claiming_platform": top_hit.get("claiming_platform"),
+                    "effective_period": f"{top_hit.get('effective_start')} - {top_hit.get('effective_end')}"
+                })
+            else:
+                comparison_results.append({
+                    "region": region,
+                    "policy_title": "未找到政策",
+                    "benefit_type": None,
+                    "benefit_amount": None,
+                    "conditions": None,
+                    "claiming_platform": None,
+                    "effective_period": None
+                })
         
         if rag_result.get("kb_citations"):
             all_citations.append(rag_result["kb_citations"])

@@ -1,0 +1,352 @@
+[
+  {
+    "id": 1,
+    "question": "在济南买空调能享受以旧换新补贴吗？",
+    "expected_answer": "可以。济南市空调属于家电以旧换新补贴范围，包括家用中央空调和风管机",
+    "category": "市级家电",
+    "campaign_id": "JN_APPLIANCE_2025"
+  },
+  {
+    "id": 2,
+    "question": "购买一台价值8000元的一级能效空调，能获得多少济南市家电补贴？",
+    "expected_answer": "1600元。基础补贴15%（1200元）+ 一级能效额外5%（400元）= 1600元",
+    "category": "市级家电",
+    "campaign_id": "JN_APPLIANCE_2025"
+  },
+  {
+    "id": 3,
+    "question": "济南市家电补贴每类产品最多可以购买几件？空调有什么特殊规定？",
+    "expected_answer": "每类产品限购1件，但空调最多可购买3台",
+    "category": "市级家电",
+    "campaign_id": "JN_APPLIANCE_2025"
+  },
+  {
+    "id": 4,
+    "question": "在济南买冰箱补贴在哪里申请？",
+    "expected_answer": "泉城购APP",
+    "category": "市级家电",
+    "campaign_id": "JN_APPLIANCE_2025"
+  },
+  {
+    "id": 5,
+    "question": "济南市家电补贴的单件补贴上限是多少？",
+    "expected_answer": "2000元",
+    "category": "市级家电",
+    "campaign_id": "JN_APPLIANCE_2025"
+  },
+  {
+    "id": 6,
+    "question": "济南市2025年家电以旧换新补贴活动，购买电视机和洗衣机可以一起申请补贴吗？每类限购几件？",
+    "expected_answer": "可以。每类产品限购1件，电视机和洗衣机属于不同类别，可以分别申请补贴",
+    "category": "市级家电",
+    "campaign_id": "JN_APPLIANCE_2025"
+  },
+  {
+    "id": 7,
+    "question": "山东省买热水器有补贴吗？",
+    "expected_answer": "有。热水器（含燃气壁挂炉热水器）属于山东省家电以旧换新补贴范围",
+    "category": "省级家电",
+    "campaign_id": "SD_APPLIANCE_2025"
+  },
+  {
+    "id": 8,
+    "question": "山东省2025年家电以旧换新实施方案，购买油烟机的补贴在哪个平台申领？",
+    "expected_answer": "在山东政务服务网申领",
+    "category": "省级家电",
+    "campaign_id": "SD_APPLIANCE_2025"
+  },
+  {
+    "id": 9,
+    "question": "山东省买净水器还能享受补贴吗？什么时候截止？",
+    "expected_answer": "可以。净水器补贴截止日期是2025年12月31日",
+    "category": "省级家电",
+    "campaign_id": "SD_APPLIANCE_2025"
+  },
+  {
+    "id": 10,
+    "question": "济南市家电补贴配送安装的时限要求是多少天？",
+    "expected_answer": "15日内配送安装签收",
+    "category": "市级家电",
+    "campaign_id": "JN_APPLIANCE_2025"
+  },
+  {
+    "id": 11,
+    "question": "济南市家电补贴政策有连续性吗？2024年享受过补贴，2025年还能申请吗？",
+    "expected_answer": "有连续性。政策明确2024年已享受补贴的消费者2025年可继续享受",
+    "category": "市级家电/省级家电",
+    "campaign_id": "JN_APPLIANCE_2025/SD_APPLIANCE_2025"
+  },
+  {
+    "id": 12,
+    "question": "济南买手机有补贴吗？",
+    "expected_answer": "有。济南市手机购新补贴按15%计算，单件上限500元",
+    "category": "市级数码",
+    "campaign_id": "JN_DIGITAL_2025"
+  },
+  {
+    "id": 13,
+    "question": "购买一台价值4000元的手机，能获得多少济南市数码补贴？",
+    "expected_answer": "500元。补贴比例15%应为600元，但达到上限500元，所以实际补贴500元",
+    "category": "市级数码",
+    "campaign_id": "JN_DIGITAL_2025"
+  },
+  {
+    "id": 14,
+    "question": "济南买平板电脑能享受补贴吗？",
+    "expected_answer": "可以。平板属于济南市数码购新补贴范围",
+    "category": "市级数码",
+    "campaign_id": "JN_DIGITAL_2025"
+  },
+  {
+    "id": 15,
+    "question": "济南市数码补贴的单件上限是多少？",
+    "expected_answer": "500元",
+    "category": "市级数码",
+    "campaign_id": "JN_DIGITAL_2025"
+  },
+  {
+    "id": 16,
+    "question": "山东省买智能手表有补贴吗？",
+    "expected_answer": "有。智能手表（手环）属于山东省数码购新补贴范围，按15%计算，单件上限500元",
+    "category": "省级数码",
+    "campaign_id": "SD_DIGITAL_2025"
+  },
+  {
+    "id": 17,
+    "question": "山东省买手机的补贴在哪里申请？",
+    "expected_answer": "在品牌官方商城或授权电商平台申领",
+    "category": "省级数码",
+    "campaign_id": "SD_DIGITAL_2025"
+  },
+  {
+    "id": 18,
+    "question": "济南市数码产品补贴有激活要求吗？手机和平板如何激活？",
+    "expected_answer": "有激活要求。需现场激活：手机插入SIM卡或平板连接WiFi",
+    "category": "市级数码/省级数码",
+    "campaign_id": "JN_DIGITAL_2025/SD_DIGITAL_2025"
+  },
+  {
+    "id": 19,
+    "question": "济南市智能手表和手环的激活方式是什么？",
+    "expected_answer": "现场与适配应用程序（APP）连接激活",
+    "category": "市级数码/省级数码",
+    "campaign_id": "JN_DIGITAL_2025/SD_DIGITAL_2025"
+  },
+  {
+    "id": 20,
+    "question": "济南市数码补贴申请的实名认证有效期是多少天？最多可以尝试几次？",
+    "expected_answer": "有效期2天，最多可尝试3次",
+    "category": "市级数码",
+    "campaign_id": "JN_DIGITAL_2025"
+  },
+  {
+    "id": 21,
+    "question": "济南上半年买新能源车有补贴吗？",
+    "expected_answer": "有。济南市2025年上半年（1月25日至3月31日）购买新能源车可享受补贴",
+    "category": "市级汽车上半年",
+    "campaign_id": "JN_CAR_UPPER_2025"
+  },
+  {
+    "id": 22,
+    "question": "济南市2025年上半年汽车补贴政策，购买一辆发票不含税价15万元的新能源汽车，能获得多少补贴？",
+    "expected_answer": "4000元（发票不含税价在10-30万元区间）",
+    "category": "市级汽车上半年",
+    "campaign_id": "JN_CAR_UPPER_2025"
+  },
+  {
+    "id": 23,
+    "question": "济南市2025年上半年汽车补贴政策，购买一辆发票不含税价35万元的燃油车，能获得多少补贴？",
+    "expected_answer": "4000元（发票不含税价超过30万元）",
+    "category": "市级汽车上半年",
+    "campaign_id": "JN_CAR_UPPER_2025"
+  },
+  {
+    "id": 24,
+    "question": "济南市上半年汽车补贴活动的购车时间是什么时候？",
+    "expected_answer": "2025年1月25日至2025年3月31日",
+    "category": "市级汽车上半年",
+    "campaign_id": "JN_CAR_UPPER_2025"
+  },
+  {
+    "id": 25,
+    "question": "济南市上半年汽车补贴在哪个平台申领？",
+    "expected_answer": "微信扫码或齐鲁银行权益平台",
+    "category": "市级汽车上半年",
+    "campaign_id": "JN_CAR_UPPER_2025"
+  },
+  {
+    "id": 26,
+    "question": "济南买新车的保险有补贴吗？",
+    "expected_answer": "有。济南市新车首保消费补贴根据车辆商业保险金额分档补贴，最高3000元",
+    "category": "市级汽车首保",
+    "campaign_id": "JN_CAR_FIRSTMAINT_2025"
+  },
+  {
+    "id": 27,
+    "question": "济南市新车首保补贴，保险金额7000元属于哪个档位？补贴多少？",
+    "expected_answer": "属于6000-8000元档位，补贴2000元",
+    "category": "市级汽车首保",
+    "campaign_id": "JN_CAR_FIRSTMAINT_2025"
+  },
+  {
+    "id": 28,
+    "question": "济南市首保补贴活动的购车时间段是什么时候？",
+    "expected_answer": "2025年5月1日至2025年6月30日",
+    "category": "市级汽车首保",
+    "campaign_id": "JN_CAR_FIRSTMAINT_2025"
+  },
+  {
+    "id": 29,
+    "question": "济南市2025年新车首保消费券活动，保险金额达到多少时补贴最高？最高补贴多少元？",
+    "expected_answer": "3000元（保险金额8000元及以上）",
+    "category": "市级汽车首保",
+    "campaign_id": "JN_CAR_FIRSTMAINT_2025"
+  },
+  {
+    "id": 30,
+    "question": "济南下半年买车还有补贴吗？分几轮？",
+    "expected_answer": "有。济南市下半年汽车补贴共3轮：7月、8月、9月各一轮",
+    "category": "市级汽车下半年",
+    "campaign_id": "JN_CAR_LOWER_2025"
+  },
+  {
+    "id": 31,
+    "question": "济南市下半年汽车补贴，18万元新车补贴构成是什么？",
+    "expected_answer": "总计4800元，包含加油储值卡3300元和保险补贴1500元",
+    "category": "市级汽车下半年",
+    "campaign_id": "JN_CAR_LOWER_2025"
+  },
+  {
+    "id": 32,
+    "question": "济南市下半年汽车补贴第一轮的购车时间和申请时间分别是什么时候？",
+    "expected_answer": "购车时间：2025年7月1日至7月31日；申请时间：2025年7月10日10:00至8月5日23:59",
+    "category": "市级汽车下半年",
+    "campaign_id": "JN_CAR_LOWER_2025"
+  },
+  {
+    "id": 33,
+    "question": "济南市下半年汽车补贴在哪个平台申领？",
+    "expected_answer": "工银e生活APP/二维码",
+    "category": "市级汽车下半年",
+    "campaign_id": "JN_CAR_LOWER_2025"
+  },
+  {
+    "id": 34,
+    "question": "济南市下半年汽车补贴个人和企业的申请限制分别是什么？",
+    "expected_answer": "个人每轮限申请1辆，企业累计最多3辆，且不能参与过前面的轮次",
+    "category": "市级汽车下半年",
+    "campaign_id": "JN_CAR_LOWER_2025"
+  },
+  {
+    "id": 35,
+    "question": "济南市下半年汽车补贴的加油储值卡有效期是多久？在哪里领取？",
+    "expected_answer": "有效期90天，在中石油或中石化领取",
+    "category": "市级汽车下半年",
+    "campaign_id": "JN_CAR_LOWER_2025"
+  },
+  {
+    "id": 36,
+    "question": "济南市下半年汽车补贴最高档位是多少？补贴构成是什么？",
+    "expected_answer": "最高8500元（40万元以上车辆），包含加油卡5500元和保险3000元",
+    "category": "市级汽车下半年",
+    "campaign_id": "JN_CAR_LOWER_2025"
+  },
+  {
+    "id": 37,
+    "question": "济南市2025年餐饮消费券活动的时间是什么时候？现在（2025年12月）还能领取吗？",
+    "expected_answer": "需要看当前时间。活动时间是2025年7月19日至2025年11月15日",
+    "category": "市级零售餐饮",
+    "campaign_id": "JN_RETAIL_CATERING_2025"
+  },
+  {
+    "id": 38,
+    "question": "济南市零售餐饮消费券一共发放几轮？发放时间是每月一轮吗？",
+    "expected_answer": "共5轮。从7月到11月每月发放一轮",
+    "category": "市级零售餐饮",
+    "campaign_id": "JN_RETAIL_CATERING_2025"
+  },
+  {
+    "id": 39,
+    "question": "济南市2025年零售消费券活动，在零售类商家消费200元，能抵扣多少钱？",
+    "expected_answer": "40元（满200减40）",
+    "category": "市级零售餐饮",
+    "campaign_id": "JN_RETAIL_CATERING_2025"
+  },
+  {
+    "id": 40,
+    "question": "济南市餐饮消费券，在餐饮店消费300元可以抵扣多少？抵扣规则是什么？",
+    "expected_answer": "可抵扣75元。规则：满100减25元，消费300元可使用3张",
+    "category": "市级零售餐饮",
+    "campaign_id": "JN_RETAIL_CATERING_2025"
+  },
+  {
+    "id": 41,
+    "question": "济南市零售餐饮消费券在哪个平台领取和使用？",
+    "expected_answer": "抖音APP",
+    "category": "市级零售餐饮",
+    "campaign_id": "JN_RETAIL_CATERING_2025"
+  },
+  {
+    "id": 42,
+    "question": "济南市餐饮消费券每批次每人最多可以领取几张？如何判断是否为同一用户？",
+    "expected_answer": "每批次限领1张。同一账号、手机、身份证、设备、银行卡或支付方式任一相同均视为同一用户",
+    "category": "市级零售餐饮",
+    "campaign_id": "JN_RETAIL_CATERING_2025"
+  },
+  {
+    "id": 43,
+    "question": "济南市零售餐饮消费券用户咨询电话是多少？服务时间是什么时候？",
+    "expected_answer": "用户咨询电话950525，服务时间09:00-23:00",
+    "category": "市级零售餐饮",
+    "campaign_id": "JN_RETAIL_CATERING_2025"
+  },
+  {
+    "id": 44,
+    "question": "济南市2025年零售餐饮消费券活动，消费券可以和商家优惠叠加使用吗？",
+    "expected_answer": "可以叠加商家优惠",
+    "category": "市级零售餐饮",
+    "campaign_id": "JN_RETAIL_CATERING_2025"
+  },
+  {
+    "id": 45,
+    "question": "济南市家电以旧换新补贴分几轮实施？现在（2025年12月18日）买冰箱还能申请吗？",
+    "expected_answer": "分两轮实施。活动时间2025年全年（1月20日至12月31日），12月18日仍可申请",
+    "category": "市级家电",
+    "campaign_id": "JN_APPLIANCE_2025"
+  },
+  {
+    "id": 46,
+    "question": "济南市家电补贴第二轮申请时间是什么时候？",
+    "expected_answer": "第二轮申请时间：2025年7月10日10:00至10月5日23:59",
+    "category": "市级家电",
+    "campaign_id": "JN_APPLIANCE_2025"
+  },
+  {
+    "id": 47,
+    "question": "济南和山东省买冰箱的补贴一样吗？",
+    "expected_answer": "补贴比例一样，都是15%基础补贴（一级能效额外5%），单件上限2000元",
+    "category": "家电对比",
+    "campaign_id": "JN_APPLIANCE_2025/SD_APPLIANCE_2025"
+  },
+  {
+    "id": 48,
+    "question": "济南市和山东省的手机购新补贴，分别在哪个平台申请？",
+    "expected_answer": "山东省在品牌官方商城/授权电商平台申领，济南市在泉城购APP申领",
+    "category": "数码对比",
+    "campaign_id": "JN_DIGITAL_2025/SD_DIGITAL_2025"
+  },
+  {
+    "id": 49,
+    "question": "济南买洗衣机补贴有问题找哪个部门？",
+    "expected_answer": "济南市商务局负责解释",
+    "category": "市级家电",
+    "campaign_id": "JN_APPLIANCE_2025"
+  },
+  {
+    "id": 50,
+    "question": "济南市下半年汽车补贴的申请主体有哪些？个人可以申请吗？政府机关和事业单位能申请吗？",
+    "expected_answer": "申请主体包括个人和企业，但不含政府机关和事业单位",
+    "category": "市级汽车下半年",
+    "campaign_id": "JN_CAR_LOWER_2025"
+  }
+]

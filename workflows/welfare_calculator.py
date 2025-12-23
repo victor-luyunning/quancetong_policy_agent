@@ -88,20 +88,32 @@ async def calculate_welfare(raw_text: str, entities: Dict[str, Any]) -> Dict[str
                 breakdown_parts.append("（已达上限2000元）")
     
     elif entities.get("industry") == "digital":
-        # 数码产品补贴规则
-        base_rate = 0.10
+        # 数码产品补贴规则 - 修正为15%
+        base_rate = 0.15
         subsidy_amount = price_paid * base_rate
-        breakdown_parts.append(f"购新补贴10%: {subsidy_amount:.2f}元")
+        breakdown_parts.append(f"购新补贴15%: {subsidy_amount:.2f}元")
         
-        # 上限
+        # 上限500元
         if subsidy_amount > 500:
             subsidy_amount = 500
             breakdown_parts.append("（已达上限500元）")
     
     elif entities.get("industry") == "car":
-        # 汽车补贴规则（固定金额）
-        subsidy_amount = 5000  # 示例
-        breakdown_parts.append(f"置换补贴: {subsidy_amount:.2f}元")
+        # 汽车补贴规则（根据价格档位）
+        # 上半年：10-30万=4000元，30万以上=4000元
+        # 下半年：15-25万=4800元（3300油卡+1500保险），40万以上=8500元
+        # 首保：按保险金额分档
+        
+        # 默认使用上半年规则（简化）
+        if price_paid >= 100000 and price_paid <= 300000:
+            subsidy_amount = 4000
+            breakdown_parts.append(f"汽车补贴: {subsidy_amount:.2f}元")
+        elif price_paid > 300000:
+            subsidy_amount = 4000
+            breakdown_parts.append(f"汽车补贴: {subsidy_amount:.2f}元")
+        else:
+            subsidy_amount = 0
+            breakdown_parts.append("未达到补贴价格区间")
     
     else:
         # 其他行业

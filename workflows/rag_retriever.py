@@ -22,6 +22,35 @@ SUPPLEMENT_DIRS = {
     "retail_catering": os.path.join(DATA_DIR, "policies", "零售餐饮补贴政策")
 }
 
+# 产品关键词同义词映射与归一化
+PRODUCT_SYNONYMS = {
+    "汽车": ["汽车", "车辆", "乘用车", "新车"],
+    "新能源汽车": ["新能源汽车", "新能源", "电动车", "纯电", "插混", "混动"],
+    "家电": ["家电", "空调", "冰箱", "洗衣机", "电视"],
+    "数码": ["数码", "手机", "平板", "智能手表", "手环"],
+    "零售": ["零售", "商超", "购物", "消费券"],
+    "餐饮": ["餐饮", "餐馆", "饭店", "美食", "消费券"]
+}
+
+def _normalize_product_keywords(product: str) -> List[str]:
+    """根据输入产品生成用于匹配的关键词列表"""
+    if not product:
+        return []
+    keys = set()
+    # 原词
+    keys.add(product)
+    # 去除常见空格与变体
+    keys.add(product.replace(" ", ""))
+    # 同义词扩展
+    for base, synonyms in PRODUCT_SYNONYMS.items():
+        if base in product:
+            for s in synonyms:
+                keys.add(s)
+    # 行业特例：含“车”时扩展为乘用车/新车
+    if "车" in product:
+        keys.update(["乘用车", "新车"]) 
+    return list(keys)
+
 
 def _load_policies() -> List[Dict[str, Any]]:
     """加载主政策库（policies.jsonl）"""
@@ -182,6 +211,8 @@ def _filter_by_entities(
         if entity_industry:
             prefixes = industry_prefixes.get(entity_industry, [])
             industry_match = any(prefix in cid for prefix in prefixes)
+            if not industry_match:
+                print(f"[RAG DEBUG] Filtered {cid}: industry mismatch (need {entity_industry})")
             ok = ok and industry_match
         
         # 地域过滤
@@ -195,18 +226,35 @@ def _filter_by_entities(
                 loc in province or province in loc or
                 loc in platform
             )
+            if not region_match:
+                print(f"[RAG DEBUG] Filtered {cid}: region mismatch (need {entity_location}, got city={city})")
             ok = ok and region_match
         
         # 产品过滤
         if entity_product and ok:
             products = ((obj.get("common_rules") or {}).get("subsidy_products") or [])
+            keys = _normalize_product_keywords(entity_product)
             if products:
-                product_match = any(entity_product in p for p in products)
+                # 使用归一化后的关键词进行匹配（任意关键词命中即可）
+                product_match = any(any(k in p for k in keys) for p in products)
+                if not product_match:
+                    # 行业为汽车时，放宽规则：只要政策产品中出现“车”字样则视为匹配
+                    if entity_industry == "car" and any("车" in p for p in products):
+                        product_match = True
+                if not product_match:
+                    print(f"[RAG DEBUG] Filtered {cid}: product mismatch (need {entity_product}, keys={keys}, got {products[:3]})")
                 ok = ok and product_match
             else:
-                ok = False
+                # 如果没有subsidy_products字段，但行业已匹配，则保留（针对汽车等情况）
+                # 如果没有行业过滤，则过滤掉
+                if not entity_industry:
+                    print(f"[RAG DEBUG] Filtered {cid}: no subsidy_products and no industry filter")
+                    ok = False
+                else:
+                    print(f"[RAG DEBUG] Kept {cid}: no subsidy_products but industry matched")
         
         if ok:
+            print(f"[RAG DEBUG] Kept {cid}: passed all filters")
             filtered.append(obj)
     
     return filtered
@@ -232,12 +280,16 @@ async def retrieve_policies(
     
     # 1. 加载主政策库
     items = _load_policies()
+    print(f"[RAG DEBUG] Loaded {len(items)} policies from JSONL")
+    
     candidates = _filter_by_entities(
         items,
         entity_location=entity_location,
         entity_product=entity_product,
         entity_industry=entity_industry
     )
+    print(f"[RAG DEBUG] After filtering: {len(candidates)} candidates")
+    print(f"[RAG DEBUG] Filter params: location={entity_location}, product={entity_product}, industry={entity_industry}")
     
     # 2. 向量召回
     texts = [_doc_text(o) for o in candidates]
@@ -310,12 +362,28 @@ async def retrieve_policies(
     scored.sort(key=lambda x: x["score"], reverse=True)
     hits = scored[:top_k]
     
-    # 4. 补充政策（可选）
-    # 如果主库命中少于3条，从补充库召回
-    if len(hits) < 3 and entity_industry:
-        supplements = _load_supplement_policies(entity_industry)
-        # 这里简化处理，补充政策作为文本提示，不做向量检索
-        # 实际应用中可以进一步向量化
+    # 4. 补充政策（行业补充库）
+    supplements = _load_supplement_policies(entity_industry) if entity_industry else []
+    # 将补充政策以简化结构追加到命中列表，供LLM融合（不做向量评分）
+    for s in supplements:
+        hits.append({
+            "doc_id": f"supp_{s['title']}",
+            "title": s["title"],
+            "summary": s["content"],
+            "region_province": None,
+            "region_city": None,
+            "effective_start": None,
+            "effective_end": None,
+            "benefit_type": None,
+            "benefit_amount": None,
+            "conditions": None,
+            "procedures": None,
+            "required_materials": None,
+            "claiming_platform": None,
+            "source_url": None,
+            "score": 0.0,
+            "source": "supplement"
+        })
     
     citations = [h["source_url"] for h in hits if h.get("source_url")]
     kb_citations = "|".join(sorted(set([c for c in citations if c])))
